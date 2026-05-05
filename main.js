@@ -21,6 +21,7 @@ const CONFIG = {
 let currentPlatform = 'apple';
 let newsData = [];
 let currentLang = 'ko'; // 'en' 또는 'ko'
+const translationCache = new Map(); // 번역 캐시 추가
 
 document.addEventListener('DOMContentLoaded', () => {
     initApp();
@@ -128,12 +129,23 @@ async function translateNews(items) {
 
 async function translateText(text) {
     if (!text || !CONFIG.GAS_ENDPOINT) return text;
+    
+    // 캐시 확인
+    const cacheKey = `${currentLang}_${text}`;
+    if (translationCache.has(cacheKey)) {
+        return translationCache.get(cacheKey);
+    }
+
     try {
         // GAS의 doGet을 호출하여 번역 수행
         const url = `${CONFIG.GAS_ENDPOINT}?action=translate&text=${encodeURIComponent(text)}`;
         const response = await fetch(url);
         const data = await response.json();
-        return data.translatedText || text;
+        const translated = data.translatedText || text;
+        
+        // 캐시에 저장
+        translationCache.set(cacheKey, translated);
+        return translated;
     } catch (error) {
         console.error('번역 오류:', error);
         return text;
@@ -154,26 +166,29 @@ async function fetchGuidelineStatus() {
     const widget = document.getElementById('guideline-version');
     const updateDate = document.getElementById('guideline-update-date');
 
-    // 플랫폼별 최신 상태 시뮬레이션
+    // 플랫폼별 최신 상태 시뮬레이션 (사용자 제공 정보 반영)
     setTimeout(() => {
         if (currentPlatform === 'apple') {
             widget.innerText = 'v5.3 (최신)';
             updateDate.innerText = `마지막 업데이트: 2024년 5월 1일`;
         } else {
-            widget.innerText = '2024 정책 (최신)';
-            updateDate.innerText = `마지막 업데이트: 2024년 4월 20일`;
+            widget.innerText = '2026 정책 (최신)';
+            updateDate.innerText = `마지막 업데이트: 2026년 4월 15일`;
         }
-    }, 1000);
+    }, 800);
 }
 
 function renderNews(items) {
     const container = document.getElementById('news-container');
     container.innerHTML = '';
+    
+    // DocumentFragment를 사용하여 성능 최적화
+    const fragment = document.createDocumentFragment();
 
     items.forEach((item, index) => {
         const card = document.createElement('div');
         card.className = 'card fade-in';
-        card.style.animationDelay = `${index * 0.1}s`;
+        card.style.animationDelay = `${index * 0.05}s`; // 애니메이션 속도 개선
         
         const displayTitle = currentLang === 'ko' ? item.title_ko : item.title_en;
         const displayDesc = currentLang === 'ko' ? item.desc_ko : item.desc_en;
@@ -192,8 +207,10 @@ function renderNews(items) {
                 </button>
             </div>
         `;
-        container.appendChild(card);
+        fragment.appendChild(card);
     });
+    
+    container.appendChild(fragment);
 }
 
 async function syncToGoogleSheets(data) {
