@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>애플 개발자 뉴스 모니터</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <h1>개발자 뉴스 모니터</h1>
+                <div class="platform-tabs">
+                    <button class="tab-btn active" data-platform="apple">
+                        <i class="fab fa-apple"></i> Apple
+                    </button>
+                    <button class="tab-btn" data-platform="android">
+                        <i class="fab fa-android"></i> Android
+                    </button>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="toggle-container">
+                    <span class="toggle-label">English</span>
+                    <label class="switch">
+                        <input type="checkbox" id="lang-toggle" checked>
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="toggle-label">한국어</span>
+                </div>
+                <div class="status-badge" id="last-sync-time">
+                    동기화 중...
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <main class="news-section" id="news-container">
+                <!-- 뉴스 카드가 여기에 동적으로 추가됩니다 -->
+                <div class="card shimmer" style="height: 200px;"></div>
+                <div class="card shimmer" style="height: 200px;"></div>
+                <div class="card shimmer" style="height: 200px;"></div>
+            </main>
+
+            <aside class="sidebar">
+                <div class="widget">
+                    <h3 class="widget-title">심사 지침 상태</h3>
+                    <div id="guideline-widget-content">
+                        <div class="guideline-status" id="guideline-version">확인 중...</div>
+                        <div class="update-date" id="guideline-update-date">마지막 업데이트: --</div>
+                        <a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" class="btn btn-secondary" style="margin-top: 1rem; width: 100%;">
+                            <i class="fas fa-external-link-alt"></i> 지침 원문 보기
+                        </a>
+                    </div>
+                </div>
+
+                <div class="widget">
+                    <h3 class="widget-title">구글 시트 연동</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                        감지된 소식을 구글 시트에 자동으로 기록하거나 수동으로 전송합니다.
+                    </p>
+                    <button class="btn btn-primary" id="sync-all-btn" style="width: 100%;">
+                        <i class="fas fa-cloud-upload-alt"></i> 모든 뉴스 전송하기
+                    </button>
+                    <div id="sync-status-msg" class="sync-status"></div>
+                    <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-secondary);">
+                        <p><strong>설정 필요:</strong> GAS 엔드포인트 URL을 설정하세요.</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
