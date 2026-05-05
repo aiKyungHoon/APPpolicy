@@ -32,6 +32,12 @@ body {
     padding: 2rem;
 }
 
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+}
+
 header {
     display: flex;
     justify-content: space-between;
@@ -39,6 +45,15 @@ header {
     margin-bottom: 3rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--glass-border);
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
 }
 
 h1 {
@@ -144,6 +159,13 @@ body.android-theme .guideline-status {
     margin-bottom: 1rem;
 }
 
+@media (max-width: 480px) {
+    .card-header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
 .date {
     font-size: 0.85rem;
     color: var(--text-secondary);
@@ -170,6 +192,17 @@ body.android-theme .guideline-status {
 .card-footer {
     display: flex;
     gap: 1rem;
+}
+
+@media (max-width: 480px) {
+    .card-footer {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    .card-footer .btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 .btn {
@@ -281,6 +314,17 @@ body.android-theme .guideline-status {
     flex-direction: column;
     align-items: flex-end;
     gap: 0.75rem;
+}
+
+@media (max-width: 600px) {
+    .header-right {
+        width: 100%;
+        align-items: flex-start;
+    }
+    .toggle-container {
+        width: 100%;
+        justify-content: space-between;
+    }
 }
 
 .toggle-container {
