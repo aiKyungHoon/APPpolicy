@@ -166,11 +166,11 @@ async function fetchGuidelineStatus() {
     const widget = document.getElementById('guideline-version');
     const updateDate = document.getElementById('guideline-update-date');
 
-    // 플랫폼별 최신 상태 시뮬레이션 (사용자 제공 정보 반영)
+    // 플랫폼별 최신 상태 시뮬레이션 (사용자 제공 및 최신 정보 반영)
     setTimeout(() => {
         if (currentPlatform === 'apple') {
-            widget.innerText = 'v5.3 (최신)';
-            updateDate.innerText = `마지막 업데이트: 2024년 5월 1일`;
+            widget.innerText = 'v5.7 (최신)';
+            updateDate.innerText = `마지막 업데이트: 2026년 4월 27일`;
         } else {
             widget.innerText = '2026 정책 (최신)';
             updateDate.innerText = `마지막 업데이트: 2026년 4월 15일`;
